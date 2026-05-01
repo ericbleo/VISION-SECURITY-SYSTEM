@@ -3,6 +3,7 @@ import cvzone
 from ultralytics import YOLO
 import math
 import os
+import base64
 from dotenv import load_dotenv
 import resend
 import time
@@ -21,19 +22,36 @@ class SecuritySystem:
         self.recipient_emails = os.getenv("RECIPIENT_EMAILS").split(",")
         self.last_email_time = 0
 
+    # Capture frame as bytes
+    def capture_frame_as_bytes(self, frame):
+        #Encode the frame as a JPEG image
+        ret, buffer = cv2.imencode(".jpg", frame)
+        if not ret:
+            return None
+        
+        return buffer.tobytes()
+
     # Send email notification
-    def send_email_notification(self):
+    def send_email_notification(self, frame):
+        image_bytes = self.capture_frame_as_bytes(frame)
+
         for email in self.recipient_emails:
             try:
                 resend.Emails.send({
                     "from": "Eric Security System <onboarding@resend.dev>",
-                    "to": email,
+                    "to": [email.strip()],
                     "subject": "MOVEMENT DETECTED 🚨",
-                    "html": "<strong>A person was detected by your security system.</strong>"
+                    "html": "<strong>A person was detected by your security system.</strong>",
+                    "attachments": [
+                        {
+                            "filename": "detected_person.jpg",
+                            "content": base64.b64encode(image_bytes).decode("utf-8")
+                        }
+                    ]
                 })
-                print(f"Email sent to {email}")
+                print(f"Email sent to {email.strip()}")
             except Exception as e:
-                print(f"Error sending email to {email}: {e}")
+                print(f"Error sending email to {email.strip()}: {e}")
 
     # Run the security system
     def run(self):
@@ -59,7 +77,7 @@ class SecuritySystem:
                         current_time = time.time()
                         # 60 seconds cooldown between emails
                         if current_time - self.last_email_time > 60:
-                            self.send_email_notification()
+                            self.send_email_notification(frame)
                             self.last_email_time = current_time
 
             cv2.imshow("VISION SECURITY SYSTEM", frame)
