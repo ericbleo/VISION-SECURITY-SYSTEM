@@ -6,7 +6,7 @@ import math
 class SecuritySystem:
     # Initialize the security system
     def __init__(self):
-        self.model = YOLO("models/yolov8n.pt")
+        self.model = YOLO("models/yolov8m.pt")
         self.video = cv2.VideoCapture(0)
         self.class_names = []
         with open("assets/coco.names", "r") as file:
@@ -18,7 +18,7 @@ class SecuritySystem:
             ret, frame = self.video.read()
             if not ret:
                 break
-            
+
             frame = cv2.flip(frame, 1)
             results = self.model(frame, stream=True)
 
