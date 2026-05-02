@@ -30,13 +30,15 @@ pip install opencv-python cvzone ultralytics python-dotenv resend
 
 ### 2. Download the AI model
 
-Download `yolov8n.pt` from [Ultralytics](https://github.com/ultralytics/assets/releases) and place it inside the `app/models/` folder:
+Create the `app/models/` folder and place `yolov8n.pt` inside it:
 
 ```
 app/
   models/
     yolov8n.pt
 ```
+
+> **Tip:** You don't need to download the model manually. If the file is missing, Ultralytics will automatically download it the first time you run the program. Just make sure the `app/models/` folder exists and you have an internet connection on first run.
 
 ### 3. Create your `.env` file
 
