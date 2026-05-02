@@ -82,7 +82,7 @@ class SecuritySystem:
                             self.send_email_notification(frame)
                             self.last_email_time = current_time
 
-            cv2.imshow("VISION SECURITY SYSTEM", frame)
+            cv2.imshow("TIKTOK: @ericbleo", frame)
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
 
