@@ -1,1 +1,3 @@
-server/.env
+app/.env
+app/models/yolov8m.pt
+app/models/yolov8n.pt
