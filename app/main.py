@@ -1,3 +1,5 @@
+# TIKTOK: https://www.tiktok.com/@ericbleo
+
 import cv2
 import cvzone
 from ultralytics import YOLO
@@ -38,7 +40,7 @@ class SecuritySystem:
         for email in self.recipient_emails:
             try:
                 resend.Emails.send({
-                    "from": "Eric Security System <onboarding@resend.dev>",
+                    "from": "ericbleo security system <onboarding@resend.dev>",
                     "to": [email.strip()],
                     "subject": "SECURITY ALERT 🚨",
                     "html": "<strong>A person was detected by your security system.</strong>",
